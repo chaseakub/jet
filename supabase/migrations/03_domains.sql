@@ -1,0 +1,69 @@
+-- public.amount
+
+create domain public.amount as numeric(12, 2) check (value >= 0);
+
+-- public.description
+
+create domain public.description as text check (length(value) <= 300);
+
+-- public.email
+
+create domain public.email as text
+  check (length(value) <= 60 and value ~ '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$');
+
+-- public.gender
+
+create domain public.gender as text check (value in ('female', 'male', 'other'));
+
+-- public.latitude
+
+create domain public.latitude as double precision check (value between -90 and 90);
+
+-- public.longitude
+
+create domain public.longitude as double precision check (value between -180 and 180);
+
+-- public.measurement_unit
+
+create domain public.measurement_unit as text check (value in ('g', 'ml', 'pc'));
+
+-- public.name
+
+create domain public.name as text check (length(value) between 1 and 60);
+
+-- public.path
+
+create domain public.path as text
+  check (
+    length(value) between 1 and 300
+    and value ~ '^/[A-Za-z0-9._/-]*[A-Za-z0-9._-]$'
+    and value !~ '(^|/)\.\.(/|$)'
+  );
+
+-- public.percentage
+
+create domain public.percentage as numeric(5, 2) check (value between 0 and 100);
+
+-- public.phone
+
+create domain public.phone as text check (value ~ '^\+[1-9][0-9]{7,14}$');
+
+-- public.slug
+
+create domain public.slug as text
+  check (length(value) between 3 and 60 and value ~ '^[a-z0-9]+(?:[._-][a-z0-9]+)*$');
+
+-- public.upi_id
+
+create domain public.upi_id as text
+  check (length(value) between 3 and 100 and value ~ '^[^\s@]+@[^\s@]+$');
+
+-- public.url
+
+create domain public.url as text
+  check (length(value) between 7 and 300 and value ~ '^https?://[^\s]+$');
+
+-- public.username
+
+create domain public.username as text
+  check (length(value) between 3 and 36 and value ~ '^[a-z0-9_]+$');
